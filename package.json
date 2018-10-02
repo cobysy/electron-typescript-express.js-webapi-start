@@ -1,10 +1,24 @@
 {
   "name": "electron-typescript-express.js-webapi-start",
   "version": "0.1.0",
-  "main": "main.js",
+  "main": "build/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "electron dist/main.js"
+    "postinstall": "electron-builder install-app-deps",
+    "start": "yarn install && yarn compile && electron build",
+    "compile": "tsc",
+    "pack": "yarn compile && electron-builder --dir",
+    "dist": "yarn compile && electron-builder",
+    "release": "yarn compile && electron-builder"
+  },
+  "build": {
+    "appId": "io.bysy.electron-webapi",
+    "mac": {
+      "category": "demo"
+    },
+    "files": [
+      "build/**/*"
+    ]
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
@@ -13,6 +27,8 @@
     "@types/morgan": "^1.7.35",
     "@types/node": "^10.11.3",
     "electron": "^3.0.2",
+    "electron-builder": "^20.28.4",
+    "exeq": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-typescript": "^5.0.0-alpha.3",
     "tslint": "^5.11.0",
